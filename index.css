@@ -1,0 +1,77 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Corpo clean */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
+  color: #111;
+  line-height: 1.6;
+}
+
+/* Header minimalista */
+header {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 60px 20px 40px;
+}
+
+#titulo {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+/* Seções */
+.acoes, .descricao {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.acoes h2 {
+  font-size: 22px;
+  margin-bottom: 30px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+/* Botões */
+button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #333;
+}
+
+/* Descrição extra */
+.descricao p {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Rodapé */
+footer {
+  background-color: #111;
+  color: #aaa;
+  text-align: center;
+  padding: 20px 10px;
+  font-size: 14px;
+}

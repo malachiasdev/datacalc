@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Calcular Média</title>
+  <link rel="stylesheet" href="media.css">
+</head>
+<body>
+  <h2>Calcular Média</h2>
+
+  <label for="quantidade">Quantos termos você deseja calcular?</label>
+  <input type="number" id="quantidade" min="1">
+  <button onclick="gerarInputs()">Gerar Caixas</button>
+
+  <form id="formulario">
+    <div id="inputsContainer"></div>
+    <button type="button" onclick="calcularMedia()">Calcular Média</button>
+  </form>
+
+  <p id="resultado"></p>
+
+  <script>
+    function gerarInputs() {
+      const container = document.getElementById("inputsContainer");
+      container.innerHTML = "";
+      const quantidade = parseInt(document.getElementById("quantidade").value);
+
+      for (let i = 1; i <= quantidade; i++) {
+        const label = document.createElement("label");
+        label.innerText = `Termo ${i}: `;
+        label.setAttribute("for", `termo${i}`);
+
+        const input = document.createElement("input");
+        input.type = "number";
+        input.id = `termo${i}`;
+        input.required = true;
+        input.style.marginBottom = "5px";
+
+        container.appendChild(label);
+        container.appendChild(input);
+        container.appendChild(document.createElement("br"));
+      }
+    }
+
+    function calcularMedia() {
+      const quantidade = parseInt(document.getElementById("quantidade").value);
+      let soma = 0;
+      let validos = 0;
+
+      for (let i = 1; i <= quantidade; i++) {
+        const input = document.getElementById(`termo${i}`);
+        const valor = parseFloat(input.value);
+        if (!isNaN(valor)) {
+          soma += valor;
+          validos++;
+        }
+      }
+
+      if (validos === quantidade && quantidade > 0) {
+        const media = soma / quantidade;
+        document.getElementById("resultado").innerText = `Média: ${media.toFixed(2)}`;
+      } else {
+        document.getElementById("resultado").innerText = "Preencha todos os termos corretamente!";
+      }
+    }
+  </script>
+</body>
+</html>

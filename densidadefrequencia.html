@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Densidade de Frequência</title>
+    <link rel="stylesheet" href="df.css">
+</head>
+<body>
+    <header>
+        <h1>Densidade de Frequência</h1>
+        <p>Digite a amplitude de classe e a frequência para calcular a densidade de frequência.</p>
+    </header>
+
+    <section class="calculadora">
+        <label for="amplitude">Amplitude de Classe:</label>
+        <input type="number" id="amplitude">
+        <label for="frequencia">Frequência:</label>
+        <input type="number" id="frequencia">
+        <button onclick="calcularDensidade()">Calcular Densidade de Frequência</button>
+
+        <h3>Resultado:</h3>
+        <div id="resultado"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Eduarda Malachias. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        function calcularDensidade() {
+            const amplitude = parseFloat(document.getElementById('amplitude').value);
+            const frequencia = parseFloat(document.getElementById('frequencia').value);
+            
+            if (isNaN(amplitude) || isNaN(frequencia)) {
+                document.getElementById('resultado').innerText = "Por favor, preencha os valores corretamente!";
+                return;
+            }
+            
+            const densidade = frequencia / amplitude;
+            document.getElementById('resultado').innerText = `Densidade de Frequência: ${densidade.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

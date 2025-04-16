@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Desvio Padrão</title>
+  <link rel="stylesheet" href="desviopadrao.css"> <!-- seu CSS separado -->
+</head>
+<body>
+
+  <h2>Cálculo do Desvio Padrão</h2>
+
+  <label for="quantidade">Quantos termos?</label>
+  <input type="number" id="quantidade" min="1" />
+
+  <button onclick="gerarCampos()">Gerar Caixas</button>
+
+  <div id="inputs"></div>
+
+  <label><input type="radio" name="tipo" value="populacional" checked> Populacional</label>
+  <label><input type="radio" name="tipo" value="amostral"> Amostral</label>
+
+  <button onclick="calcularDesvioPadrao()">Calcular Desvio Padrão</button>
+
+  <h3 id="resultado"></h3>
+
+  <script>
+    function gerarCampos() {
+      const qtd = parseInt(document.getElementById('quantidade').value);
+      const container = document.getElementById('inputs');
+      container.innerHTML = ''; // Limpa campos antigos
+
+      for (let i = 0; i < qtd; i++) {
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.className = 'input-termo';
+        input.placeholder = `Termo ${i + 1}`;
+        container.appendChild(input);
+      }
+    }
+
+    function calcularDesvioPadrao() {
+      const inputs = document.querySelectorAll('.input-termo');
+      const valores = Array.from(inputs).map(input => parseFloat(input.value)).filter(val => !isNaN(val));
+      const n = valores.length;
+
+      if (n === 0) {
+        document.getElementById('resultado').innerText = 'Digite os valores corretamente.';
+        return;
+      }
+
+      const media = valores.reduce((acc, val) => acc + val, 0) / n;
+
+      const somaQuadrados = valores.reduce((acc, val) => acc + Math.pow(val - media, 2), 0);
+
+      const tipo = document.querySelector('input[name="tipo"]:checked').value;
+      const divisor = tipo === 'amostral' ? (n - 1) : n;
+
+      const desvioPadrao = Math.sqrt(somaQuadrados / divisor).toFixed(2);
+
+      document.getElementById('resultado').innerText = `Desvio Padrão (${tipo}): ${desvioPadrao}`;
+    }
+  </script>
+
+</body>
+</html>

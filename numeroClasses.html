@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Número de Classes</title>
+    <link rel="stylesheet" href="nc.css">
+</head>
+<body>
+    <header>
+        <h1>Número de Classes</h1>
+        <p>Digite o intervalo de dados e o número de classes para calcular o número de classes.</p>
+    </header>
+
+    <section class="calculadora">
+        <label for="intervalo">Intervalo de Dados:</label>
+        <input type="number" id="intervalo">
+        <label for="classes">Número de Classes:</label>
+        <input type="number" id="classes">
+        <button onclick="calcularClasses()">Calcular Número de Classes</button>
+
+        <h3>Resultado:</h3>
+        <div id="resultado"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Eduarda Malachias. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        function calcularClasses() {
+            const intervalo = parseFloat(document.getElementById('intervalo').value);
+            const classes = parseFloat(document.getElementById('classes').value);
+            
+            if (isNaN(intervalo) || isNaN(classes)) {
+                document.getElementById('resultado').innerText = "Por favor, preencha os valores corretamente!";
+                return;
+            }
+            
+            const numeroClasses = Math.ceil(intervalo / classes);
+            document.getElementById('resultado').innerText = `Número de Classes: ${numeroClasses}`;
+        }
+    </script>
+</body>
+</html>

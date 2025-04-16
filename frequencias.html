@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequências</title>
+    <link rel="stylesheet" href="frequencias.css">
+</head>
+<body>
+
+    <header>
+        <h1>Cálculo de Frequências</h1>
+        <p>
+            Insira os dados abaixo para calcular a frequência absoluta, relativa, acumulada e relativa acumulada.
+        </p>
+    </header>
+
+    <section class="acoes">
+        <h2>Digite os valores</h2>
+        
+        <label for="quantidade">Quantos valores?</label>
+        <input type="number" id="quantidade" min="1" />
+
+        <button onclick="gerarCampos()">Gerar Campos</button>
+
+        <div id="inputs"></div>
+
+        <button onclick="calcularFrequencias()">Calcular Frequências</button>
+
+        <h3 id="resultado"></h3>
+    </section>
+
+    <section class="frequencias">
+        <h2>Frequências</h2>
+
+        <table id="tabelaFrequencias">
+            <thead>
+                <tr>
+                    <th>Valor</th>
+                    <th>Frequência Absoluta</th>
+                    <th>Frequência Relativa</th>
+                    <th>Frequência Acumulada</th>
+                    <th>Frequência Relativa Acumulada</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- As frequências calculadas serão inseridas aqui -->
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Eduarda Malachias. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        function gerarCampos() {
+            const qtd = parseInt(document.getElementById('quantidade').value);
+            const container = document.getElementById('inputs');
+            container.innerHTML = ''; // Limpa campos antigos
+
+            for (let i = 0; i < qtd; i++) {
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.className = 'input-termo';
+                input.placeholder = `Valor ${i + 1}`;
+                container.appendChild(input);
+            }
+        }
+
+        function calcularFrequencias() {
+            const inputs = document.querySelectorAll('.input-termo');
+            const valores = Array.from(inputs).map(input => parseFloat(input.value)).filter(val => !isNaN(val));
+            const n = valores.length;
+
+            if (n === 0) {
+                document.getElementById('resultado').innerText = 'Digite os valores corretamente.';
+                return;
+            }
+
+            const frequenciaAbsoluta = {};
+            let somaFrequencias = 0;
+
+            // Calcular frequência absoluta
+            valores.forEach(valor => {
+                frequenciaAbsoluta[valor] = frequenciaAbsoluta[valor] ? frequenciaAbsoluta[valor] + 1 : 1;
+                somaFrequencias++;
+            });
+
+            let frequenciasRelativas = {};
+            let acumulada = 0;
+            let relAcumulada = 0;
+            const tabela = document.getElementById('tabelaFrequencias').getElementsByTagName('tbody')[0];
+
+            for (const valor in frequenciaAbsoluta) {
+                const freqAbs = frequenciaAbsoluta[valor];
+                const freqRel = freqAbs / somaFrequencias;
+                acumulada += freqAbs;
+                relAcumulada += freqRel;
+
+                const row = tabela.insertRow();
+
+                const cellValor = row.insertCell(0);
+                cellValor.textContent = valor;
+
+                const cellFreqAbs = row.insertCell(1);
+                cellFreqAbs.textContent = freqAbs;
+
+                const cellFreqRel = row.insertCell(2);
+                cellFreqRel.textContent = (freqRel * 100).toFixed(2) + '%';
+
+                const cellFreqAcumulada = row.insertCell(3);
+                cellFreqAcumulada.textContent = acumulada;
+
+                const cellFreqRelAcumulada = row.insertCell(4);
+                cellFreqRelAcumulada.textContent = (relAcumulada * 100).toFixed(2) + '%';
+            }
+
+            document.getElementById('resultado').innerText = 'Frequências calculadas com sucesso!';
+        }
+    </script>
+
+</body>
+</html>

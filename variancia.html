@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Variância</title>
+  <link rel="stylesheet" href="variancia.css">
+</head>
+<body>
+
+  <h2>Cálculo da Variância</h2>
+
+  <label for="quantidade">Quantos termos?</label>
+  <input type="number" id="quantidade" min="1">
+
+  <button onclick="gerarCampos()">Gerar Caixas</button>
+
+  <div id="inputs"></div>
+
+  <label>
+    <input type="radio" name="tipo" value="populacional" checked>
+    Populacional
+  </label>
+  <label>
+    <input type="radio" name="tipo" value="amostral">
+    Amostral
+  </label>
+
+  <button onclick="calcularVariancia()">Calcular Variância</button>
+
+  <h3 id="resultado"></h3>
+
+  <script>
+    function gerarCampos() {
+      const qtd = parseInt(document.getElementById('quantidade').value);
+      const container = document.getElementById('inputs');
+      container.innerHTML = '';
+
+      for (let i = 0; i < qtd; i++) {
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.className = 'input-termo';
+        input.placeholder = `Termo ${i + 1}`;
+        container.appendChild(input);
+      }
+    }
+
+    function calcularVariancia() {
+      const inputs = document.querySelectorAll('.input-termo');
+      const tipo = document.querySelector('input[name="tipo"]:checked').value;
+      let valores = Array.from(inputs).map(input => parseFloat(input.value)).filter(val => !isNaN(val));
+
+      if (valores.length < 1) {
+        document.getElementById('resultado').innerText = 'Digite os valores corretamente.';
+        return;
+      }
+
+      const media = valores.reduce((a, b) => a + b, 0) / valores.length;
+      const somaQuadrados = valores.reduce((soma, val) => soma + Math.pow(val - media, 2), 0);
+      const variancia = tipo === 'populacional' ? 
+                        somaQuadrados / valores.length : 
+                        somaQuadrados / (valores.length - 1);
+
+      document.getElementById('resultado').innerText = `Variância ${tipo}: ${variancia.toFixed(2)}`;
+    }
+  </script>
+
+</body>
+</html>

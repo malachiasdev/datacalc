@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amplitude de Classe</title>
+    <link rel="stylesheet" href="ac.css">
+</head>
+<body>
+    <h2>Cálculo da Amplitude de Classe</h2>
+
+    <label for="quantidade">Quantos valores?</label>
+    <input type="number" id="quantidade" min="1" />
+
+    <button onclick="gerarCampos()">Gerar Caixas</button>
+
+    <div id="inputs"></div>
+
+    <button onclick="calcularAmplitude()">Calcular Amplitude de Classe</button>
+
+    <h3 id="resultado"></h3>
+
+    <script>
+        function gerarCampos() {
+            const qtd = parseInt(document.getElementById('quantidade').value);
+            const container = document.getElementById('inputs');
+            container.innerHTML = '';
+
+            for (let i = 0; i < qtd; i++) {
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.className = 'input-termo';
+                input.placeholder = `Valor ${i + 1}`;
+                container.appendChild(input);
+            }
+        }
+
+        function calcularAmplitude() {
+            const inputs = document.querySelectorAll('.input-termo');
+            const valores = Array.from(inputs).map(input => parseFloat(input.value)).filter(val => !isNaN(val));
+
+            if (valores.length === 0) {
+                document.getElementById('resultado').innerText = 'Digite os valores corretamente.';
+                return;
+            }
+
+            const minValor = Math.min(...valores);
+            const maxValor = Math.max(...valores);
+            const amplitude = (maxValor - minValor).toFixed(2);
+
+            document.getElementById('resultado').innerText = `Amplitude de Classe: ${amplitude}`;
+        }
+    </script>
+</body>
+</html>
